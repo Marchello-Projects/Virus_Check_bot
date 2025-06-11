@@ -64,4 +64,4 @@ async def handle_document(message: Message):
 
         await message.answer(f"✅ Analysis completed!\n\nResults:\n{verdict}")
     except Exception as e:
-        await message.answer(f"❌ Error: {e}")
+        await message.answer(f"❌ Error! Please try again later")
