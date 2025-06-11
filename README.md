@@ -21,7 +21,7 @@ VirusTotal provides an API for scanning files, URLs, IP addresses, and domains f
 
 Code from the repository:
 ```python
-sync def check_file(filepath):
+async def check_file(filepath):
     async with vt.Client(os.getenv("VIRUS_TOTAL_API")) as client:
         async with aiofiles.open(filepath, 'rb') as f:
             content = await f.read()
