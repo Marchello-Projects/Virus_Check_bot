@@ -19,13 +19,7 @@ async def check_file(filepath):
             file_like = BytesIO(content)
             analysis = await client.scan_file_async(file_like, wait_for_completion=True)
 
-        for _ in range(10):
-            analysis_result = await client.get_object_async(f"/analyses/{analysis.id}")
-            status = getattr(analysis_result, "status", None)
-            if status == "completed":
-                return analysis_result
-            await asyncio.sleep(3)
-        return analysis_result
+            return analysis 
 
 @router.message(F.text == '🦠 scan')
 async def cmd_profile(message: Message):
