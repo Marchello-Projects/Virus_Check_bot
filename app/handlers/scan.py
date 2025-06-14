@@ -1,6 +1,6 @@
 import os
+import shutil
 from io import BytesIO
-import asyncio
 
 import aiofiles
 import vt
@@ -18,7 +18,6 @@ async def check_file(filepath):
             content = await f.read()
             file_like = BytesIO(content)
             analysis = await client.scan_file_async(file_like, wait_for_completion=True)
-
             return analysis 
 
 @router.message(F.text == '🦠 scan')
@@ -57,5 +56,8 @@ async def handle_document(message: Message):
             verdict = "No stats available."
 
         await message.answer(f"✅ Analysis completed!\n\nResults:\n{verdict}")
-    except Exception as e:
-        await message.answer(f"❌ Error! Please try again later")
+    except Exception:
+        await message.answer("❌ Error! Please try again later")
+    finally:
+        if os.path.exists("downloads"):
+            shutil.rmtree("downloads")
